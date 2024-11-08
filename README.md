@@ -19,8 +19,8 @@ Installation
 
 1. Clone the repository
 bash
-git clone https://github.com/username/xxxx-xxxxxxx-app.git
-cd xxxxxxx-xxxxxxxxx-app
+git clone https://github.com/CS-LTU/com7033-assignment-jacekkszczot.git
+cd assignment-jacekkszczot.git
 
 
 2. Create and activate virtual environment
