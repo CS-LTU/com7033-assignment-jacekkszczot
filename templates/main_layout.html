@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stroke Prediction App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div class="nav">
+        <a href="{{ url_for('home_page') }}" class="btn">Home Page</a>
+        <a href="{{ url_for('user_login') }}" class="btn">Login</a>
+        <a href="{{ url_for('user_register') }}" class="btn">Register</a>
+    </div>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
