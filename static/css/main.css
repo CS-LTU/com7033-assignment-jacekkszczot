@@ -19,3 +19,38 @@ body {
 .content {
     padding: 2em;
 }
+/* Patient management styles */
+.patient-section {
+    padding: 2em;
+}
+
+.add-patient-form {
+    margin: 2em 0;
+    padding: 1em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.form-row {
+    display: flex;
+    gap: 1em;
+    margin-bottom: 1em;
+}
+
+.patient-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+}
+
+.patient-list th,
+.patient-list td {
+    padding: 0.5em;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.error-page {
+    text-align: center;
+    padding: 2em;
+}
