@@ -54,3 +54,42 @@ body {
     text-align: center;
     padding: 2em;
 }
+/* Risk assessment styles */
+.result-container {
+    max-width: 600px;
+    margin: 2em auto;
+    padding: 2em;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.risk-result {
+    margin: 2em 0;
+    padding: 1em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.risk-value {
+    text-align: center;
+    font-size: 1.2em;
+    margin: 1em 0;
+    padding: 1em;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+.risk-factors {
+    margin-top: 1em;
+}
+
+.risk-factors ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.risk-factors li {
+    padding: 0.5em 0;
+    border-bottom: 1px solid #eee;
+}

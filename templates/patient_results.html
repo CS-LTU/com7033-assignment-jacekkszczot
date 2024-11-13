@@ -1,0 +1,39 @@
+{% extends "main_layout.html" %}
+{% block content %}
+<div class="result-container">
+    <h2>Done !</h2>
+    
+    <div class="risk-result">
+        <h3>Patient Assessment</h3>
+        
+        <div class="risk-value">
+            <h4>Risk Level: {{ "%.1f"|format(stroke_risk * 100) }}%</h4>
+        </div>
+        
+        <div class="risk-factors">
+            <h4>Why Risk Detected:</h4>
+            <ul>
+                {% if hypertension == 1 %}
+                <li>Hypertension detected (+30%)</li>
+                {% endif %}
+                
+                {% if age > 60 %}
+                <li>Age above 60 (+30%)</li>
+                {% endif %}
+                
+                {% if glucose > 200 %}
+                <li>High glucose level (+20%)</li>
+                {% endif %}
+                
+                {% if smoking.lower() == 'smokes' %}
+                <li>Current smoker (+20%)</li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    
+    <div class="actions">
+        <a href="{{ url_for('patients_list') }}" class="btn">Back to Patients</a>
+    </div>
+</div>
+{% endblock %}
