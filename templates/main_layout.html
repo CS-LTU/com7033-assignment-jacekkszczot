@@ -1,17 +1,122 @@
 <!DOCTYPE html>
-<html>
+<html lang="pl">
 <head>
-    <title>Stroke Prediction App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stroke Prediction 1.0</title>
+    <style>
+        body { 
+            font-family: Arial; 
+            margin: 0;
+            padding: 0;
+            background-image: url('/static/images/background.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        .banner-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        .banner {
+            width: 100%;
+            max-width: 1000px; /* Maksymalna szerokość banera */
+            height: auto; /* Automatyczna wysokość */
+            display: block; /* Usuwamy padding-top */
+        }
+        .nav { 
+            background-color: #234567;
+            padding: 15px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #456789;
+            border-radius: 5px;
+        }
+        .nav a:hover {
+            background-color: #567890;
+        }
+        .content {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #456789;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #567890;
+        }
+        .form-group { 
+            margin: 15px 0; 
+        }
+        .alert { 
+            padding: 10px; 
+            margin: 10px 0; 
+            background: #f8d7da; 
+            border-radius: 5px;
+        }
+        .user-info {
+            color: white;
+            margin: 0 15px;
+            font-size: 14px;
+        }
+        @media (max-width: 768px) {
+            .banner-container {
+                padding: 10px 0;
+            }
+            .nav {
+                flex-direction: column;
+            }
+            .content {
+                margin: 10px;
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="nav">
-        <a href="{{ url_for('home_page') }}" class="btn">Home Page</a>
-        <a href="{{ url_for('user_login') }}" class="btn">Login</a>
-        <a href="{{ url_for('user_register') }}" class="btn">Register</a>
+    <div class="banner-container">
+        <img src="/static/images/banner.jpg" alt="Banner" class="banner">
     </div>
-
+    <div class="nav">
+        <a href="/" class="btn">Home Page</a>
+        {% if 'user_id' in session %}
+            <a href="{{ url_for('patients_list') }}" class="btn">Patient Base</a>
+            <span class="user-info">Welcome, {{ session.get('user_name', 'User') }}</span>
+            <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+        {% else %}
+            <a href="{{ url_for('user_login') }}" class="btn">Login</a>
+            <a href="{{ url_for('user_register') }}" class="btn">Register</a>
+        {% endif %}
+    </div>
+    
     <div class="content">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         {% block content %}{% endblock %}
     </div>
 </body>

@@ -1,0 +1,68 @@
+{% extends "main_layout.html" %}
+{% block content %}
+{% if 'user_id' in session %}
+        <center><div class="welcome-box">
+            <h2>Welcome to the System, {{ session.get('user_name', 'User') }}</h2>
+            <div class="button-group">
+                <a href="{{ url_for('patients_list') }}" class="btn">View Patient Base</a>
+            </div></center>
+
+<div class="home-content">
+    <h1>Stroke Management App</h1><br>
+
+<img src="/static/images/hearth.png" alt="Invitation"
+
+<br><br><br><b>
+<h3><center>Welcome to <br>
+Stroke Prediction a specialised tool<br>
+crafted to support healthcare professionals<br>
+in assessing stroke risk. <br><br>
+Using data-driven insights and advanced algorithms,<br>
+ this application provides personalised risk predictions<br>
+ based on essential patient health indicators, 
+<br>enabling you to make informed,<br>
+ proactive decisions in patient care. <br><br>With Stroke Prediction, you gain a reliable,<br>
+ efficient resource tailored to enhance your<br>
+ clinical assessment and improve patient outcomes.</center></h3></b>
+    
+
+        </div>
+    {% else %}
+        <div class="login-box">
+            <h2>Please Login or Register</h2>
+            <div class="button-group">
+                <a href="{{ url_for('user_login') }}" class="btn">Login</a>
+                <a href="{{ url_for('user_register') }}" class="btn">Register</a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+.home-content {
+    text-align: center;
+    padding: 20px;
+}
+.welcome-box, .login-box {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 500px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+}
+.button-group {
+    margin: 20px 0;
+}
+.button-group .btn {
+    margin: 0 10px;
+}
+h1 {
+    color: #234567;
+    margin-bottom: 30px;
+}
+h2 {
+    color: #456789;
+    margin-bottom: 20px;
+}
+</style>
+{% endblock %}
