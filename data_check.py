@@ -1,6 +1,4 @@
-# data_check.py
 def validate_patient_data(data):
-    """Validate patient input data"""
     if not 0 <= float(data['age']) <= 120:
         return False, "Age must be between 0 and 120"
     

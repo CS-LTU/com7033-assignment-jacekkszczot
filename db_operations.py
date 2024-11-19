@@ -1,11 +1,9 @@
-# db_operations.py
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from db_setup import get_db_connection, get_mongodb_connection
 
 # User Operations (SQLite)
 def add_user(name, email, password):
-    """Add new user to SQLite database"""
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
@@ -22,7 +20,6 @@ def add_user(name, email, password):
         conn.close()
 
 def verify_user(email, password):
-    """Verify user login"""
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
@@ -39,7 +36,6 @@ def verify_user(email, password):
 
 # Patient Operations (MongoDB)
 def add_patient(patient_data):
-    """Add new patient to MongoDB"""
     db = get_mongodb_connection()
     try:
         result = db.patients.insert_one(patient_data)
@@ -48,7 +44,6 @@ def add_patient(patient_data):
         return False, str(e)
 
 def get_patient(patient_id):
-    """Get patient by ID"""
     db = get_mongodb_connection()
     try:
         patient = db.patients.find_one({'_id': patient_id})
@@ -57,7 +52,6 @@ def get_patient(patient_id):
         return None
 
 def get_all_patients():
-    """Get all patients"""
     db = get_mongodb_connection()
     try:
         patients = list(db.patients.find())
@@ -66,7 +60,6 @@ def get_all_patients():
         return []
 
 def update_patient(patient_id, updated_data):
-    """Update patient data"""
     db = get_mongodb_connection()
     try:
         result = db.patients.update_one(
@@ -78,7 +71,6 @@ def update_patient(patient_id, updated_data):
         return False
 
 def delete_patient(patient_id):
-    """Delete patient"""
     db = get_mongodb_connection()
     try:
         result = db.patients.delete_one({'_id': patient_id})

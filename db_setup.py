@@ -1,10 +1,8 @@
-# db_setup.py
 import sqlite3
 from pymongo import MongoClient
 import os
 
 def setup_sqlite():
-    """Setup SQLite database for users"""
     conn = sqlite3.connect('user_base.db')
     cursor = conn.cursor()
     
@@ -23,14 +21,9 @@ def setup_sqlite():
     conn.close()
 
 def setup_mongodb():
-    """Setup MongoDB for patient data"""
     client = MongoClient('mongodb://localhost:27017/')
     db = client['stroke_management']
-    
-    # Create patient collection with validation
     db.create_collection('patients')
-    
-    # Add validation schema
     db.command({
         'collMod': 'patients',
         'validator': {
@@ -63,11 +56,11 @@ def setup_mongodb():
                         'enum': ['Rural', 'Urban']
                     },
                     'avg_glucose_level': {
-                        'bsonType': ['double', 'init'] # changes to accept both int and double ['double', 'init']
+                        'bsonType': ['double', 'init'] #  to accept both int and double ['double', 'init']
                         'minimum': 0
                     },
                     'bmi': {
-                        'bsonType': ['double', 'init'] # changes to accept both int and double ['double', 'init']
+                        'bsonType': ['double', 'init'] # to accept both int and double ['double', 'init']
                         'minimum': 10,
                         'maximum': 50
                     },
@@ -76,7 +69,7 @@ def setup_mongodb():
                         'enum': ['formerly smoked', 'never smoked', 'smokes', 'Unknown']
                     },
                     'stroke_risk': {
-                        'bsonType': ['double', 'init'] # changes to accept both int and double ['double', 'init']
+                        'bsonType': ['double', 'init'] # to accept both int and double ['double', 'init']
                         'minimum': 0,
                         'maximum': 1
                     }
@@ -86,7 +79,6 @@ def setup_mongodb():
     })
 
 def init_databases():
-    """Initialize both databases"""
     try:
         setup_sqlite()
         print("SQLite database setup complete")
@@ -99,13 +91,11 @@ def init_databases():
 
 # Database connection functions
 def get_db_connection():
-    """Get SQLite connection for users"""
     conn = sqlite3.connect('user_base.db')
     conn.row_factory = sqlite3.Row
     return conn
 
 def get_mongodb_connection():
-    """Get MongoDB connection for patients"""
     client = MongoClient('mongodb://localhost:27017/')
     db = client['stroke_management']
     return db

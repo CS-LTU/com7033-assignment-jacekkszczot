@@ -1,6 +1,4 @@
-# risk_calc.py
 def calculate_stroke_risk(patient_data):
-    """Calculate stroke risk based on patient data"""
     risk_score = 0
     
     # Age risk
@@ -30,4 +28,4 @@ def calculate_stroke_risk(patient_data):
     if patient_data['smoking_status'] == 'smokes':
         risk_score += 0.1
         
-    return min(risk_score, 1.0)  # Maximum risk is 100%
+    return min(risk_score, 1.0)  

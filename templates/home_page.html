@@ -1,39 +1,35 @@
 {% extends "main_layout.html" %}
 {% block content %}
 {% if 'user_id' in session %}
-        <center><div class="welcome-box">
-            <h2>Welcome to the System, {{ session.get('user_name', 'User') }}</h2>
-            <div class="button-group">
-                <a href="{{ url_for('patients_list') }}" class="btn">View Patient Base</a>
-            </div></center>
+        
 
 <div class="home-content">
     <h1>Stroke Management App</h1><br>
 
-<img src="/static/images/hearth.png" alt="Invitation"
 
-<br><br><br><b>
-<h3><center>Welcome to <br>
-Stroke Prediction a specialised tool<br>
-crafted to support healthcare professionals<br>
-in assessing stroke risk. <br><br>
-Using data-driven insights and advanced algorithms,<br>
- this application provides personalised risk predictions<br>
- based on essential patient health indicators, 
-<br>enabling you to make informed,<br>
- proactive decisions in patient care. <br><br>With Stroke Prediction, you gain a reliable,<br>
- efficient resource tailored to enhance your<br>
- clinical assessment and improve patient outcomes.</center></h3></b>
+
+<br><b>
+<h3><center>Welcome to the Stroke Prediction 1.0 App <br><br>
+This is a specialised tool designed to assist healthcare professionals in assessing stroke risk.<br>
+By harnessing data-driven insights and advanced algorithms,<br>
+this app provides personalised risk predictions based on key patient health indicators,<br>
+enabling you to make informed and proactive decisions in patient care.<br>
+With Stroke Prediction, you gain a reliable and efficient resource, tailored to support your clinical assessments<br>
+and ultimately improve patient outcomes.<br><br>
+In this app, as a registered and logged-in user, you can add new patients and upload updated patient data<br>
+to the database using the "Update Dataset" button.<br>
+Please remember to name the new data file "dataset" and place it in the application's folder, inside the "data" folder.<br><br>
+Good luck with your work!</center></h3></b>
+ <br><br>
+ <img src="/static/images/hearth.png" alt="Invitation"
     
 
         </div>
     {% else %}
-        <div class="login-box">
-            <h2>Please Login or Register</h2>
-            <div class="button-group">
-                <a href="{{ url_for('user_login') }}" class="btn">Login</a>
-                <a href="{{ url_for('user_register') }}" class="btn">Register</a>
-            </div>
+    <center> 
+            
+            <img src="/static/images/welcome.png" alt="Invitation"
+           </center>
         </div>
     {% endif %}
 </div>

@@ -1,43 +1,3 @@
-"""
-Stroke Prediction Application
-----------------------------
-
-This application helps medical professionals manage patient data and predict stroke risks.
-It uses a dual database system for enhanced security and implements various secure
-development techniques.
-
-Databases:
-- SQLite: Stores user authentication data
-- MongoDB: Stores patient medical records
-
-Security Features:
-- Password hashing
-- Session management
-- Input validation
-- Protected routes
-- Data encryption
-
-Main Components:
-1. User Management
-   - Registration
-   - Authentication
-   - Session handling
-
-2. Patient Management
-   - Add new patients
-   - View patient details
-   - Import patient data
-   - Calculate stroke risk
-
-3. Data Security
-   - Input validation
-   - Data sanitization
-   - Access control
-
-Author: [Your Name]
-Version: 1.0
-"""
-
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
@@ -104,7 +64,7 @@ def user_login():
            session['user_id'] = user['id']
            session['user_name'] = user['name']
            flash('Logged in successfully!')
-           return redirect(url_for('patients_list'))
+           return redirect(url_for('home_page'))
        flash('Invalid email or password')
    return render_template('user_login.html')
 
@@ -131,137 +91,139 @@ def user_register():
 @app.route('/patients_list')
 @login_required
 def patients_list():
-   patient_list = list(patients.find())
+   # id sorted, new added on the top list
+   patient_list = list(patients.find().sort('_id', -1))
    return render_template('patient_base.html', patients=patient_list)
+   
 
-def import_kaggle_data():
-   try:
-       # Ścieżka do pliku CSV w folderze projektu
-       csv_path = os.path.join(os.path.dirname(__file__), 'healthcare-dataset-stroke-data.csv')
-       
-       # Wczytaj dane z pliku CSV
-       df = pd.read_csv(csv_path)
-       
-       # Licznik dodanych rekordów
-       added_count = 0
-       
-       # Przekształć dane do formatu MongoDB
-       for _, row in df.iterrows():
-           try:
-               # Walidacja i konwersja BMI
-               bmi = float(row['bmi']) if pd.notna(row['bmi']) else 0.0
-               if bmi < 10:  # Jeśli BMI jest za niskie, ustaw domyślną wartość
-                   bmi = 25.0  # Średnia wartość BMI
-               
-               patient_data = {
-                   'gender': str(row['gender']),
-                   'age': float(row['age']),
-                   'hypertension': int(row['hypertension']),
-                   'ever_married': str(row['ever_married']),
-                   'work_type': str(row['work_type']),
-                   'residence_type': str(row['Residence_type']),
-                   'avg_glucose_level': float(row['avg_glucose_level']),
-                   'bmi': bmi,  # Używamy przetworzonej wartości BMI
-                   'smoking_status': str(row['smoking_status'])
-               }
-               
-               # Oblicz ryzyko udaru
-               risk_factors = 0
-               if patient_data['hypertension'] == 1:
-                   risk_factors += 0.3
-               if patient_data['age'] > 60:
-                   risk_factors += 0.3
-               if patient_data['avg_glucose_level'] > 200:
-                   risk_factors += 0.2
-               if patient_data['smoking_status'] == 'smokes':
-                   risk_factors += 0.2
-                   
-               patient_data['stroke_risk'] = min(risk_factors, 1.0)
-               
-               # Sprawdź czy pacjent już istnieje
-               existing_patient = patients.find_one({
-                   'gender': patient_data['gender'],
-                   'age': patient_data['age'],
-                   'hypertension': patient_data['hypertension'],
-                   'avg_glucose_level': patient_data['avg_glucose_level']
-               })
-               
-               if not existing_patient:
-                   patients.insert_one(patient_data)
-                   added_count += 1
-                   
-           except Exception as e:
-               print(f"Error processing record: {str(e)}")
-               continue
-       
-       return True, f"Successfully imported {added_count} new patient records"
-   except Exception as e:
-       return False, f"Error importing data: {str(e)}"
+def import_dataset_data():
+    try:
+        # patch to csv file
+        csv_path = os.path.join(os.path.dirname(__file__), 'data', 'dataset.csv')
+        
+        # read CSV
+        df = pd.read_csv(csv_path)
+        
+        # count
+        added_count = 0
+        
+        # change a data to MongoDB format
+        for _, row in df.iterrows():
+            try:
+                bmi = float(row['bmi']) if pd.notna(row['bmi']) else 0.0
+                if bmi < 10:
+                    bmi = 25.0
+                
+                patient_data = {
+                    'gender': str(row['gender']),
+                    'age': float(row['age']),
+                    'hypertension': int(row['hypertension']),
+                    'ever_married': str(row['ever_married']),
+                    'work_type': str(row['work_type']),
+                    'residence_type': str(row['Residence_type']),
+                    'avg_glucose_level': float(row['avg_glucose_level']),
+                    'bmi': bmi,
+                    'smoking_status': str(row['smoking_status'])
+                }
+                
+                # risk count
+                risk_factors = 0
+                if patient_data['hypertension'] == 1:
+                    risk_factors += 0.3
+                if patient_data['age'] > 60:
+                    risk_factors += 0.3
+                if patient_data['avg_glucose_level'] > 200:
+                    risk_factors += 0.2
+                if patient_data['smoking_status'] == 'smokes':
+                    risk_factors += 0.2
+                    
+                patient_data['stroke_risk'] = min(risk_factors, 1.0)
+                
+                existing_patient = patients.find_one({
+                    'gender': patient_data['gender'],
+                    'age': patient_data['age'],
+                    'hypertension': patient_data['hypertension'],
+                    'avg_glucose_level': patient_data['avg_glucose_level']
+                })
+                
+                if not existing_patient:
+                    patients.insert_one(patient_data)
+                    added_count += 1
+                    
+            except Exception as e:
+                print(f"Error processing record: {str(e)}")
+                continue
+        
+        return True, f"Successfully imported {added_count} new patient records"
+    except Exception as e:
+        return False, f"Error importing data: {str(e)}"
 
-@app.route('/import_kaggle_dataset', methods=['GET'])
+@app.route('/import_dataset', methods=['GET'])
 @login_required
-def import_kaggle_dataset():
-   success, message = import_kaggle_data()
-   if success:
-       flash(message)
-   else:
-       flash(message, 'error')
-   return redirect(url_for('patients_list'))
+def import_dataset_route():
+    success, message = import_dataset_data()
+    if success:
+        flash(message)
+    else:
+        flash(message, 'error')
+    return redirect(url_for('patients_list'))
 
-@app.route('/add_patient', methods=['POST'])
+@app.route('/add_patient', methods=['GET', 'POST'])
 @login_required
-def add_patient():
-   if request.method == 'POST':
-       patient_data = {
-           'gender': request.form['gender'],
-           'age': float(request.form['age']),
-           'hypertension': int(request.form['hypertension']),
-           'ever_married': request.form['ever_married'],
-           'work_type': request.form['work_type'],
-           'residence_type': request.form['residence_type'],
-           'avg_glucose_level': float(request.form['avg_glucose_level']),
-           'bmi': float(request.form['bmi']),
-           'smoking_status': request.form['smoking_status']
-       }
-       
-       # Oblicz ryzyko udaru
-       risk_factors = 0.0 # changed to 0.0 for double
-       if patient_data['hypertension'] == 1:
-           risk_factors += 0.3
-       if patient_data['age'] > 60:
-           risk_factors += 0.3
-       if patient_data['avg_glucose_level'] > 200:
-           risk_factors += 0.2
-       if patient_data['smoking_status'].lower() == 'smokes':
-           risk_factors += 0.2
-           
-       stroke_risk = float(min(risk_factors, 1.0))
-       patient_data['stroke_risk'] = stroke_risk
-       
-       patients.insert_one(patient_data)
-       
-       # Zmieniona nazwa szablonu na patient_result
-       return render_template('patient_result.html', 
-                            stroke_risk=stroke_risk,
-                            hypertension=patient_data['hypertension'],
-                            age=patient_data['age'],
-                            glucose=patient_data['avg_glucose_level'],
-                            smoking=patient_data['smoking_status'])
+def add_patient_route():
+    if request.method == 'POST':
+        patient_data = {
+            'gender': request.form['gender'],
+            'age': float(request.form['age']),
+            'hypertension': int(request.form['hypertension']),
+            'ever_married': request.form['ever_married'],
+            'work_type': request.form['work_type'],
+            'residence_type': request.form['residence_type'],
+            'avg_glucose_level': float(request.form['avg_glucose_level']),
+            'bmi': float(request.form['bmi']),
+            'smoking_status': request.form['smoking_status']
+        }
+        
+        # stroke count
+        risk_factors = 0.0
+        if patient_data['hypertension'] == 1:
+            risk_factors += 0.3
+        if patient_data['age'] > 60:
+            risk_factors += 0.3
+        if patient_data['avg_glucose_level'] > 200:
+            risk_factors += 0.2
+        if patient_data['smoking_status'].lower() == 'smokes':
+            risk_factors += 0.2
+            
+        stroke_risk = float(min(risk_factors, 1.0))
+        patient_data['stroke_risk'] = stroke_risk
+        
+        patients.insert_one(patient_data)
+        
+        flash('Patient added successfully!')
+        return render_template('patient_result.html', 
+                             stroke_risk=stroke_risk,
+                             hypertension=patient_data['hypertension'],
+                             age=patient_data['age'],
+                             glucose=patient_data['avg_glucose_level'],
+                             smoking=patient_data['smoking_status'])
+    
+    return redirect(url_for('patients_list'))
 
 @app.route('/patient_info/<string:patient_id>')
 @login_required
 def patient_info(patient_id):
-   patient = patients.find_one({'_id': ObjectId(patient_id)})
-   if patient:
-       return render_template('patient_info.html', patient=patient)
-   flash('Patient not found!')
-   return redirect(url_for('patients_list'))
+    patient = patients.find_one({'_id': ObjectId(patient_id)})
+    if patient:
+        return render_template('patient_info.html', patient=patient)
+    flash('Patient not found!')
+    return redirect(url_for('patients_list'))
 
 @app.route('/logout')
 def logout():
-   session.clear()
-   flash('Logged out successfully!')
-   return redirect(url_for('home_page'))
+    session.clear()
+    flash('Logged out successfully!')
+    return redirect(url_for('home_page'))
 
 if __name__ == '__main__':
-   app.run(debug=True)
+    app.run(debug=True)

@@ -1,0 +1,5 @@
+.DS_Store
+venv/
+myenv/
+_pycache_
+*.db

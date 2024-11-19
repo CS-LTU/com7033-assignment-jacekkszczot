@@ -1,4 +1,4 @@
-/* static/css/main.css */
+/* main.css */
 
 /* All pages */
 body { 
@@ -8,48 +8,26 @@ body {
     background-image: url('/static/images/background.jpg');
     background-size: cover;
     background-attachment: fixed;
- }
- 
- /* Banner */
- .banner {
-    width: 80%;
-    height: 70px;
-    background-image: url('/static/images/banner.jpg');
-    background-size: cover;
-    margin-bottom: 20px;
- }
- 
- /* Navigation */
- .nav { 
+}
+
+/* Navigation */
+.nav { 
     background-color: #234567;
     padding: 15px;
     text-align: center;
- }
- 
- .nav-link {
-    color: #FFFFFF;
-    text-decoration: none;
-    padding: 10px 20px;
-    margin: 0 10px;
-    background-color: #456789;
-    border-radius: 5px;
- }
- 
- .nav-link:hover {
-    background-color: #567890;
- }
- 
- /* Content areas */
- .content {
+}
+
+/* Content areas */
+.content {
     margin: 20px;
     padding: 20px;
     background-color: #FFFFFF;
     border-radius: 10px;
     opacity: 0.9;
- }
- 
- /* Buttons */
- .btn {
+}
+
+/* Buttons */
+.btn {
     display: inline-block;
     padding: 10px 20px;
     background-color: #456789;
@@ -58,128 +36,54 @@ body {
     border-radius: 5px;
     cursor: pointer;
     text-decoration: none;
- }
- 
- .btn:hover {
+}
+
+.btn:hover {
     background-color: #567890;
- }
- 
- /* Forms */
- .form-group { 
+}
+
+/* Forms */
+.form-group { 
     margin: 15px 0; 
- }
- 
- .form-input {
+}
+
+.form-input {
     padding: 8px;
     width: 100%;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
- }
- 
- /* Alerts */
- .alert { 
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+}
+
+.form-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+/* Alerts */
+.alert { 
     padding: 10px; 
     margin: 10px 0; 
     background-color: #F8D7DA; 
     border-radius: 5px;
- }
- 
- /* Tables */
- .table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
- }
- 
- .table th,
- .table td {
-    padding: 10px;
-    border: 1px solid #DDDDDD;
-    text-align: left;
- }
- 
- .table th {
-    background-color: #456789;
-    color: #FFFFFF;
- }
- 
- /* User info */
- .user-info {
-    display: inline-block;
-    color: #FFFFFF;
-    margin: 0 10px;
- }
- 
- /* Risk assessment */
- .risk-value {
-    font-size: 24px;
-    color: #234567;
-    margin: 20px 0;
- }
- 
- .risk-factors {
-    margin: 20px 0;
-    padding: 15px;
-    background-color: #F8F9FA;
-    border-radius: 5px;
- }
- 
- /* Action buttons */
- .actions {
-    margin-top: 30px;
-    text-align: center;
- }
- 
- .button-group {
-    margin: 20px 0;
-    text-align: center;
- }
- 
- /* Import section */
- .import-btn {
-    margin: 20px 0;
- }
- 
- /* Patient details */
- .info-card {
-    background-color: #FFFFFF;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
- }
- 
- .info-row {
-    display: flex;
-    justify-content: space-between;
-    margin: 15px 0;
- }
- 
- .info-group {
-    flex: 1;
-    margin: 0 10px;
- }
- 
- /* Home page */
- .welcome-box {
-    text-align: center;
-    margin: 30px 0;
- }
- 
- .home-content {
-    text-align: center;
-    margin: 40px 0;
- }
- 
- /* Login page */
- .login-box {
-    text-align: center;
-    margin: 50px auto;
-    max-width: 400px;
- }
- 
- /* Error page */
- .error-page {
-    text-align: center;
-    margin: 50px auto;
-    max-width: 500px;
- }
+}
+
+.alert-success {
+    background-color: #D4EDDA;
+    color: #155724;
+}
+
+.alert-error {
+    background-color: #F8D7DA;
+    color: #721C24;
+}
+
