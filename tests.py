@@ -3,8 +3,10 @@ from main_app import app
 
 class StrokeAppTests(unittest.TestCase):
     def setUp(self):
-        app.config['TESTING'] = True
-        self.app = app.test_client()
+       app.config['TESTING'] = True
+       self.app = app.test_client()
+       self.username = "Jacek"    
+       self.email = "jacek@jacek.com" 
         
     def test_home_page(self):
         response = self.app.get('/')
@@ -29,6 +31,16 @@ class StrokeAppTests(unittest.TestCase):
     def test_login(self):
         response = self.app.get('/user_login')
         self.assertEqual(response.status_code, 200)  
+    def test_user_exists(self):
+       self.app.post('/user_register', data={
+           'name': self.username,
+           'email': self.email,
+           'password': 'test123'
+       })
+       self.assertTrue(user_exists(self.username, self.email))
+
+   def test_user_not_exists(self):
+       self.assertFalse(user_exists('NonExistenUser', 'nonexistent@example.com'))
 
 if __name__ == '__main__':
     unittest.main()
