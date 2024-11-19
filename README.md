@@ -1,89 +1,109 @@
-# Stroke Prediction 1.0
+Stroke Prediction 1.0
+AI Usage Statement
+This assignment used generative AI in the following ways for the purposes of completing the assignment:
 
-Stroke Prediction 1.0 is a web application built with Flask for predicting the risk of stroke based on patient data. The app uses MongoDB to store patient information and SQLite for user authentication.
+brainstorming
+planning
+feedback
+editing
+
+Use of Generative Artificial Intelligence
+I declare that the following AI tools were used in developing this project:
+
+ChatGPT (OpenAI, 2024)  https://chat.openai.com
+Claude (Anthropic, 2024) https://claude.ai
+
+Used for: initial project development (October-November 2024).
+Note: While AI tools were used during development, screenshots and conversation logs were not preserved at the time. 
+This transparency statement is being added retrospectively to ensure compliance with academic requirements.
+
+AI Generated Images
+Application interface images generated using Adobe Stock AI can be found in:
+
+/static/images/
+Full licensing and generation details are documented in /static/images/graphic_licences.txt
+
+I confirm all AI usage has been implemented in accordance with module requirements.
+
+Jacek Kszczot
+19 November 2024
+
+
+Stroke Prediction 1.0 is a web application built with Flask for predicting the risk of stroke based on patient data. 
+The app uses MongoDB to store patient information and SQLite for user authentication.
 The application was created as part of an assessment.
 
-# Features
+Features
 
-- User registration and login
-- Patient management (adding and viewing patients)
-- Import patient data from CSV file
-- Risk prediction based on patient data
-- Displaying detailed information for each patient
+User registration and login
+Patient management (adding and viewing patients)
+Import patient data from CSV file
+Risk prediction based on patient data
+Displaying detailed information for each patient
 
-# Requirements
+Requirements
 
-- Python 3.7 or higher
-- MongoDB 4.0 or higher
-- SQLite 3.x
+Python 3.7 or higher
+MongoDB 4.0 or higher
+SQLite 3.x
 
-# Required Libraries
+Required Libraries
+
 Flask
 pandas
 pymongo
 werkzeug
 
 Install the required libraries from requirements.txt
-
-
 Installation
+
 Download and install databases Sqlite (if required) and MongoDB
+
 MongoDB: https://www.mongodb.com/try/download/community
 
+
 Clone the repository:
-bash
-git clone https://github.com/CS-LTU/com7033-assignment-jacekkszczot.git
+bashCopygit clone https://github.com/CS-LTU/com7033-assignment-jacekkszczot.git
 cd (local repository)
-
 or download zip file from github and unarchive to your local folder
-
 Install the required libraries:
+bashCopypip install -r requirements.txt
 
-# bash
-pip install -r requirements.txt
-Run MongoDB 
+Run MongoDB
+Start the application:
 
-# Start the application:
-
-To run the app locally:
-
-# Create and activate a virtual environment 
-
-# bash 
-python -m venv venv
-
-# bash 
+Create and activate a virtual environment
+bashCopypython -m venv venv
 venv\Scripts\activate
 
-# bash 
-python main_app.py
+Run the app locally:
+bashCopypython main_app.py
 
-# The app will be available at http://127.0.0.1:5000/.
+The app will be available at http://127.0.0.1:5000/.
 
-# Add .csv file to data folder, please remember about change a file name to: dataset.csv
-# Go to Patient Base and click Update Dataset
 
-# App Test
+Add .csv file to data folder, please remember about change a file name to: dataset.csv
+Go to Patient Base and click Update Dataset
+
+App Test
 Tests for the Flask Application:
 
-# Test Home Page - checks if home page loads (status code 200)
-# Test Login Page - checks if login page loads (status code 200)
-# Test Register Page - checks if register page loads (status code 200)
-# Test Patient List - checks if user is redirected when not logged in (status code 302)
-# Test Registration Page - checks if registration page loads (status code 200)
-# Test Login Page - checks if login page loads (status code 200)
+Test Home Page - checks if home page loads (status code 200)
+Test Login Page - checks if login page loads (status code 200)
+Test Register Page - checks if register page loads (status code 200)
+Test Patient List - checks if user is redirected when not logged in (status code 302)
+Test Registration Page - checks if registration page loads (status code 200)
+Test Login Page - checks if login page loads (status code 200)
 
 Status Codes:
-# 200 = OK (page loads successfully)
-# 302 = Redirect (user not logged in)
 
-# bash
-python tests.py
+200 = OK (page loads successfully)
+302 = Redirect (user not logged in)
 
-
-
+To run the tests:
+bashCopypython tests.py
 Application Structure
-stroke_app/
+Copystroke_app/
 │
 ├── config.py
 ├── main_app.py
@@ -122,6 +142,5 @@ stroke_app/
 Author
 Jacek Kszczot
 Leeds Trinity University
-
 Version
 1.0
