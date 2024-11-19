@@ -3,10 +3,10 @@ Stroke Prediction 1.0
 AI Usage Statement
 This assignment used generative AI in the following ways for the purposes of completing the assignment:
 
-brainstorming
-planning
-feedback
-editing
+# brainstorming
+# planning
+# feedback
+# editing
 
 Use of Generative Artificial Intelligence
 I declare that the following AI tools were used in developing this project:
