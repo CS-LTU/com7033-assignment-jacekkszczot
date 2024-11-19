@@ -100,6 +100,8 @@ Go to Patient Base and click Update Dataset
 * Test Patient List - checks if user is redirected when not logged in (status code 302)
 * Test Registration Page - checks if registration page loads (status code 200)
 * Test Login Page - checks if login page loads (status code 200)
+* Test User Exists - verifies if a user exists in database after registration
+* Test User Not Exists - checks if non-existent user is not found in database
 
 * Status Codes:
 
