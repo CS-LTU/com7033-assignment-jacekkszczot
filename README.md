@@ -33,6 +33,12 @@
 * Jacek Kszczot
 * 19 November 2024
 
+# Software Used to Production
+* Visual Studio Code
+* Anaconda Navigator
+* Jupyter
+* Adobe Photoshop
+* Microsoft Office
 
 # Stroke Prediction 1.0 
 * is a web application built with Flask that predicts the risk of stroke based on patient data. 
