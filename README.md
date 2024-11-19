@@ -34,8 +34,8 @@ Jacek Kszczot
 19 November 2024
 
 
-#Stroke Prediction 1.0 
-is a web application built with Flask that predicts the risk of stroke based on patient data. 
+# Stroke Prediction 1.0 
+* is a web application built with Flask that predicts the risk of stroke based on patient data. 
 The app uses MongoDB to store patient information and SQLite for user authentication.
 The application was created as part of an assessment.
 
