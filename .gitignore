@@ -3,3 +3,4 @@ venv/
 myenv/
 _pycache_
 *.db
+*.md
