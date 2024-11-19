@@ -35,6 +35,16 @@ def init_sqlite_db():
 
 init_sqlite_db()
 
+# user sql test code
+def user_exists(username, email):
+   conn = get_db_connection()
+   cursor = conn.cursor()
+   cursor.execute("SELECT * FROM users WHERE name = ? AND email = ?", (username, email))
+   result = cursor.fetchone()
+   cursor.close()
+   conn.close()
+   return result is not None
+
 # Login required decorator
 def login_required(f):
    @wraps(f)
