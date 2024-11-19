@@ -69,21 +69,21 @@ MongoDB: https://www.mongodb.com/try/download/community
 
 
 Clone the repository:
-bashCopygit clone https://github.com/CS-LTU/com7033-assignment-jacekkszczot.git
+bash git clone https://github.com/CS-LTU/com7033-assignment-jacekkszczot.git
 cd (local repository)
 or download zip file from github and unarchive to your local folder
 Install the required libraries:
-bashCopypip install -r requirements.txt
+bash pip install -r requirements.txt
 
 Run MongoDB
 Start the application:
 
 Create and activate a virtual environment
-bashCopypython -m venv venv
+bash python -m venv venv
 venv\Scripts\activate
 
 Run the app locally:
-bashCopypython main_app.py
+bash python main_app.py
 
 The app will be available at http://127.0.0.1:5000/.
 
@@ -107,7 +107,7 @@ Go to Patient Base and click Update Dataset
 * 302 = Redirect (user not logged in)
 
 * To run the tests:
-  * bashCopypython tests.py
+  * bash python tests.py
  
   * 
 * Application Structure
