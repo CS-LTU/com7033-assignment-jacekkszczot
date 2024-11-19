@@ -9,17 +9,19 @@ This assignment used generative AI in the following ways for the purposes of com
 * editing
 
 Use of Generative Artificial Intelligence
-I declare that the following AI tools were used in developing this project:
 
-ChatGPT (OpenAI, 2024)  https://chat.openai.com
-Claude (Anthropic, 2024) https://claude.ai
+* I declare that the following AI tools were used in developing this project:
 
-Used for: initial project development (October-November 2024).
-Note: While AI tools were used during development, screenshots and conversation logs were not preserved at the time. 
-This transparency statement is being added retrospectively to ensure compliance with academic requirements.
+* ChatGPT (OpenAI, 2024)  https://chat.openai.com
+* Claude (Anthropic, 2024) https://claude.ai
+Used for: 
+* initial project development (October-November 2024).
+  
+* Note: While AI tools were used during development, screenshots and conversation logs were not preserved at the time. 
+* This transparency statement is being added retrospectively to ensure compliance with academic requirements.
 
 AI Generated Images
-Application interface images generated using Adobe Stock AI can be found in:
+* Application interface images generated using Adobe Stock AI can be found in:
 
 /static/images/
 Full licensing and generation details are documented in /static/images/graphic_licences.txt
