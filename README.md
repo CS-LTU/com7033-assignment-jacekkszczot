@@ -3,10 +3,10 @@ Stroke Prediction 1.0
 AI Usage Statement
 This assignment used generative AI in the following ways for the purposes of completing the assignment:
 
-* brainstorming
-* planning
-* feedback
-* editing
+* Brainstorming
+* Planning
+* Feedback
+* Editing
 
 Use of Generative Artificial Intelligence
 
@@ -20,11 +20,13 @@ Used for:
 * Note: While AI tools were used during development, screenshots and conversation logs were not preserved at the time. 
 * This transparency statement is being added retrospectively to ensure compliance with academic requirements.
 
-AI Generated Images
+AI-Generated Images
 * Application interface images generated using Adobe Stock AI can be found in:
 
-/static/images/
-Full licensing and generation details are documented in /static/images/graphic_licences.txt
+*/static/images/
+
+*Full licensing and generation details are documented in /static/images/graphic_licences.txt
+
 
 I confirm all AI usage has been implemented in accordance with module requirements.
 
@@ -32,7 +34,8 @@ Jacek Kszczot
 19 November 2024
 
 
-Stroke Prediction 1.0 is a web application built with Flask for predicting the risk of stroke based on patient data. 
+#Stroke Prediction 1.0 
+is a web application built with Flask that predicts the risk of stroke based on patient data. 
 The app uses MongoDB to store patient information and SQLite for user authentication.
 The application was created as part of an assessment.
 
