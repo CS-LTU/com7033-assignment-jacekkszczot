@@ -1,35 +1,41 @@
-Stroke Prediction 1.0
-AI Usage Statement
-This assignment used generative AI in the following ways for the purposes of completing the assignment:
+# Stroke Prediction 1.0
 
-brainstorming
-planning
-feedback
-editing
+# AI Usage Statement
+* This assignment used generative AI in the following ways for the purposes of completing the assignment:
 
-Use of Generative Artificial Intelligence
-I declare that the following AI tools were used in developing this project:
+* Brainstorming
+* Planning
+* Feedback
+* Editing
 
-ChatGPT (OpenAI, 2024)  https://chat.openai.com
-Claude (Anthropic, 2024) https://claude.ai
+# Use of Generative Artificial Intelligence
 
-Used for: initial project development (October-November 2024).
-Note: While AI tools were used during development, screenshots and conversation logs were not preserved at the time. 
-This transparency statement is being added retrospectively to ensure compliance with academic requirements.
+* I declare that the following AI tools were used in developing this project:
 
-AI Generated Images
-Application interface images generated using Adobe Stock AI can be found in:
+* ChatGPT (OpenAI, 2024)  https://chat.openai.com
+* Claude (Anthropic, 2024) https://claude.ai
+* Used for: 
+* initial project development (October-November 2024).
+  
+* Note: While AI tools were used during development, screenshots and conversation logs were not preserved at the time. 
+* This transparency statement is being added retrospectively to ensure compliance with academic requirements.
 
-/static/images/
-Full licensing and generation details are documented in /static/images/graphic_licences.txt
+# AI-Generated Images
+* Application interface images generated using Adobe Stock AI can be found in:
 
-I confirm all AI usage has been implemented in accordance with module requirements.
+* /static/images/
 
-Jacek Kszczot
-19 November 2024
+* Full licensing and generation details are documented in /static/images/graphic_licences.txt
 
 
-Stroke Prediction 1.0 is a web application built with Flask for predicting the risk of stroke based on patient data. 
+* I confirm all AI usage has been implemented in accordance with module requirements.
+
+* Jacek Kszczot
+* 19 November 2024
+
+
+# Stroke Prediction 1.0 
+* is a web application built with Flask that predicts the risk of stroke based on patient data. 
 The app uses MongoDB to store patient information and SQLite for user authentication.
 The application was created as part of an assessment.
 
@@ -85,25 +91,28 @@ The app will be available at http://127.0.0.1:5000/.
 Add .csv file to data folder, please remember about change a file name to: dataset.csv
 Go to Patient Base and click Update Dataset
 
-App Test
-Tests for the Flask Application:
+# App Test
+* Tests for the Flask Application:
 
-Test Home Page - checks if home page loads (status code 200)
-Test Login Page - checks if login page loads (status code 200)
-Test Register Page - checks if register page loads (status code 200)
-Test Patient List - checks if user is redirected when not logged in (status code 302)
-Test Registration Page - checks if registration page loads (status code 200)
-Test Login Page - checks if login page loads (status code 200)
+* Test Home Page - checks if home page loads (status code 200)
+* Test Login Page - checks if login page loads (status code 200)
+* Test Register Page - checks if register page loads (status code 200)
+* Test Patient List - checks if user is redirected when not logged in (status code 302)
+* Test Registration Page - checks if registration page loads (status code 200)
+* Test Login Page - checks if login page loads (status code 200)
 
-Status Codes:
+* Status Codes:
 
-200 = OK (page loads successfully)
-302 = Redirect (user not logged in)
+* 200 = OK (page loads successfully)
+* 302 = Redirect (user not logged in)
 
-To run the tests:
-bashCopypython tests.py
-Application Structure
-Copystroke_app/
+* To run the tests:
+  * bashCopypython tests.py
+ 
+  * 
+* Application Structure
+* 
+stroke_app/
 │
 ├── config.py
 ├── main_app.py
