@@ -77,7 +77,7 @@ def init_sqlite_db():
 init_sqlite_db()
 
 # This is my security check - it makes sure nobody can register twice
-# I check both username and email 
+# App check both username and email 
 def user_exists(username, email):
    conn = get_db_connection()
    cursor = conn.cursor()
@@ -104,7 +104,7 @@ def home_page():
    return render_template('home_page.html')
 
 # Page where users log in
-# I check if their email exists and if their password is correct
+# App check if their email exists and if their password is correct
 @app.route('/user_login', methods=['GET', 'POST'])
 def user_login():
    if request.method == 'POST':
@@ -124,7 +124,7 @@ def user_login():
    return render_template('user_login.html')
 
 # This is apge where new users can make an account
-# I make sure to check if their email is already used and hash their password before saving it
+# App make sure to check if their email is already used and hash their password before saving it
 @app.route('/user_register', methods=['GET', 'POST'])
 def user_register():
    if request.method == 'POST':
@@ -146,7 +146,7 @@ def user_register():
    return render_template('user_register.html')
 
 # Here is page with all patients
-# I sort them by ID in reverse so newest ones are at the top, It's easier for users to find patients they just added
+# App sort them by ID in reverse so newest ones are at the top, It's easier for users to find patients they just added
 @app.route('/patients_list')
 @login_required
 def patients_list():
@@ -158,12 +158,12 @@ def patients_list():
 # This function helps me load lots of patients directly from data folder a CSV file.
 # Because of this users can easily import their data
 #
-# I check all the data that comes from CSV:
+# App check all the data that comes from CSV:
 # Make sure all text values are correct
 # Check if numbers make sense (like age can't be 200)
 # Fix or replace any wrong values
 #
-# I also made it safe:
+# App also made it safe:
 # Check if file exists and isn't empty
 # Don't add the same patient twice
 # If one patient has bad data, others can still be added
@@ -282,7 +282,7 @@ def import_dataset_data():
    except Exception as e:
        return False, f"Error data: {str(e)}"
 
-# This is the button that uses my import function. If something goes wrong, I show an error message
+# This is the button that uses my import function. If something goes wrong, app show an error message
 @app.route('/import_dataset', methods=['GET'])
 @login_required
 def import_dataset_route():
@@ -293,7 +293,7 @@ def import_dataset_route():
         flash(message, 'error')
     return redirect(url_for('patients_list'))
 
-# # This is where I add new patients and check their stroke risk
+# # This is where app add new patients and check their stroke risk
 # I got these risk values from the American Stroke Association and CDC resources:
 # High blood pressure adds 0.3 to risk
 # Being over 60 adds 0.3
