@@ -1,3 +1,42 @@
+# This app assesses stroke risk using user-friendly functions.
+# I used Flask because it's one of the best ways to create apps.
+
+# I needed two different databases for my project:
+# I used SQLite for users because it was perfect for simple things like storing usernames and passwords. 
+# Also I picked MongoDB for patients because I have many different details about each patient and I might need to add more later. In MongoDB 
+# I can easily change what information I store, and it's really good when you have lots of data. SQLite would be too strict for this but MongoDB is more practical.
+#
+# I wanted to check stroke risk, so I looked up the most common risk factors 
+# in the American Stroke Association and CDC resources, I picked the main ones that I could easily check.
+# So:
+# age 
+# high blood pressure
+# high sugar levels
+# smoking
+#
+# Another thing why I decided to use MongoDB for my patient data is because I can add more risk factors later(as showing in .csv file). But for this project I choose only basic data.
+#
+# On this website you can:
+# Use login and register page
+# You can add new patients
+# App can calculate stroke risk
+# I made a way to load many patients at once from CSV files for more friendly app
+# Only we must remember about changing a .csv file name in data folder to dataset.csv, I do this for the future to easily update file data.
+
+# Here's what I used to make my app safe:
+# Password Security: Users create passwords when they register, function turn passwords into secret code using password_hash
+
+# Login Security: user needs an email and password to login and will be checked if already used - one email = one account only
+# When a user logs in, the function creates a session with a secret key that changes every time the app starts, and deletes the session when the user logs out.
+#
+# Patient Data Security: The app must ensure that patient information is only accessible to logged-in users by using @login_required before displaying any data, prevent access to patient details by guessing IDs, and check for duplicates when loading patients from a CSV file.
+#
+# Database Security: User logins are stored in a SQLite database, while patient data is managed in a separate MongoDB database that only accepts local connections for enhanced security; this separation ensures that if one system is compromised, the other remains protected. 
+# In a production environment, MongoDB would require a username and password, but for local development, the current setup is sufficient.
+
+
+# Below in the code I will explain in short comments the functions
+
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
@@ -7,21 +46,23 @@ import os
 from functools import wraps
 import pandas as pd
 
+# # I need this to keep user sessions secure
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
-# Database setup
+# I connect to SQLite database this way - it's where I keep user accounts
 def get_db_connection():
    conn = sqlite3.connect('user_base.db')
    conn.row_factory = sqlite3.Row
    return conn
 
-# MongoDB setup
+# I use MongoDB for my patient data - it's great for storing lots of data
 mongo_client = MongoClient('mongodb://localhost:27017/')
 mongo_db = mongo_client['stroke_management']
 patients = mongo_db.patients
 
-# Initialize SQLite database
+# I need this table for storing user information
+# It has columns for: id, name, email and hashed password
 def init_sqlite_db():
    conn = get_db_connection()
    c = conn.cursor()
@@ -35,7 +76,8 @@ def init_sqlite_db():
 
 init_sqlite_db()
 
-# user sql test code
+# This is my security check - it makes sure nobody can register twice
+# I check both username and email 
 def user_exists(username, email):
    conn = get_db_connection()
    cursor = conn.cursor()
@@ -45,7 +87,8 @@ def user_exists(username, email):
    conn.close()
    return result is not None
 
-# Login required decorator
+# This decorator is really useful as it checks if a user is logged in before displaying any pages, 
+# and redirects them to the login page if they are not logged in.
 def login_required(f):
    @wraps(f)
    def decorated_function(*args, **kwargs):
@@ -55,11 +98,13 @@ def login_required(f):
        return f(*args, **kwargs)
    return decorated_function
 
-# Routes
+# Routes to the home page
 @app.route('/')
 def home_page():
    return render_template('home_page.html')
 
+# Page where users log in
+# I check if their email exists and if their password is correct
 @app.route('/user_login', methods=['GET', 'POST'])
 def user_login():
    if request.method == 'POST':
@@ -78,6 +123,8 @@ def user_login():
        flash('Invalid email or password')
    return render_template('user_login.html')
 
+# This is apge where new users can make an account
+# I make sure to check if their email is already used and hash their password before saving it
 @app.route('/user_register', methods=['GET', 'POST'])
 def user_register():
    if request.method == 'POST':
@@ -98,76 +145,144 @@ def user_register():
            conn.close()
    return render_template('user_register.html')
 
+# Here is page with all patients
+# I sort them by ID in reverse so newest ones are at the top, It's easier for users to find patients they just added
 @app.route('/patients_list')
 @login_required
 def patients_list():
+
    # id sorted, new added on the top list
    patient_list = list(patients.find().sort('_id', -1))
    return render_template('patient_base.html', patients=patient_list)
    
-
+# This function helps me load lots of patients directly from data folder a CSV file.
+# Because of this users can easily import their data
+#
+# I check all the data that comes from CSV:
+# Make sure all text values are correct
+# Check if numbers make sense (like age can't be 200)
+# Fix or replace any wrong values
+#
+# I also made it safe:
+# Check if file exists and isn't empty
+# Don't add the same patient twice
+# If one patient has bad data, others can still be added
+#
+# This helps keep my database clean and my risk calculations accurate
 def import_dataset_data():
-    try:
-        # patch to csv file
-        csv_path = os.path.join(os.path.dirname(__file__), 'data', 'dataset.csv')
-        
-        # read CSV
-        df = pd.read_csv(csv_path)
-        
-        # count
-        added_count = 0
-        
-        # change a data to MongoDB format
-        for _, row in df.iterrows():
-            try:
-                bmi = float(row['bmi']) if pd.notna(row['bmi']) else 0.0
-                if bmi < 10:
-                    bmi = 25.0
-                
-                patient_data = {
-                    'gender': str(row['gender']),
-                    'age': float(row['age']),
-                    'hypertension': int(row['hypertension']),
-                    'ever_married': str(row['ever_married']),
-                    'work_type': str(row['work_type']),
-                    'residence_type': str(row['Residence_type']),
-                    'avg_glucose_level': float(row['avg_glucose_level']),
-                    'bmi': bmi,
-                    'smoking_status': str(row['smoking_status'])
-                }
-                
-                # risk count
-                risk_factors = 0
-                if patient_data['hypertension'] == 1:
-                    risk_factors += 0.3
-                if patient_data['age'] > 60:
-                    risk_factors += 0.3
-                if patient_data['avg_glucose_level'] > 200:
-                    risk_factors += 0.2
-                if patient_data['smoking_status'] == 'smokes':
-                    risk_factors += 0.2
-                    
-                patient_data['stroke_risk'] = min(risk_factors, 1.0)
-                
-                existing_patient = patients.find_one({
-                    'gender': patient_data['gender'],
-                    'age': patient_data['age'],
-                    'hypertension': patient_data['hypertension'],
-                    'avg_glucose_level': patient_data['avg_glucose_level']
-                })
-                
-                if not existing_patient:
-                    patients.insert_one(patient_data)
-                    added_count += 1
-                    
-            except Exception as e:
-                print(f"Error processing record: {str(e)}")
-                continue
-        
-        return True, f"Successfully imported {added_count} new patient records"
-    except Exception as e:
-        return False, f"Error importing data: {str(e)}"
+   try:
+       # patch to csv file
+       csv_path = os.path.join(os.path.dirname(__file__), 'data', 'dataset.csv')
+       
+       # read CSV
+       df = pd.read_csv(csv_path)
+       
+       # count added patients
+       added_count = 0
+       
+       # check each row from CSV
+       for _, row in df.iterrows():
+           try:
+               # Check and fix all data before adding to patient_data:
+               
+               # Check gender - must be "Male" or "Female"
+               gender = str(row['gender']) if pd.notna(row['gender']) else "Unknown"
+               if gender not in ["Male", "Female"]:
+                   gender = "Unknown"
+               
+               # Check age - must be realistic
+               age = float(row['age']) if pd.notna(row['age']) else 0.0
+               if age < 0 or age > 120:
+                   age = 0.0
+               
+               # Check hypertension - must be 0 or 1
+               hypertension = int(row['hypertension']) if pd.notna(row['hypertension']) else 0
+               if hypertension not in [0, 1]:
+                   hypertension = 0
+                   
+               # Check marriage status
+               ever_married = str(row['ever_married']) if pd.notna(row['ever_married']) else "Unknown"
+               if ever_married not in ["Yes", "No"]:
+                   ever_married = "Unknown"
+                   
+               # Check work type
+               work_type = str(row['work_type']) if pd.notna(row['work_type']) else "Unknown"
+               if work_type not in ["Private", "Self-employed", "Govt_job", "children", "Never_worked"]:
+                   work_type = "Unknown"
+                   
+               # Check residence type
+               residence_type = str(row['Residence_type']) if pd.notna(row['Residence_type']) else "Unknown"
+               if residence_type not in ["Urban", "Rural"]:
+                   residence_type = "Unknown"
+                   
+               # Check glucose - must be realistic medical value
+               glucose = float(row['avg_glucose_level']) if pd.notna(row['avg_glucose_level']) else 0.0
+               if glucose < 0 or glucose > 500:  # normal values are between 0 and 500
+                   glucose = 0.0
+                   
+               # BMI check
+               bmi = float(row['bmi']) if pd.notna(row['bmi']) else 0.0
+               if bmi < 10:
+                   bmi = 25.0
+                   
+               # Check smoking status
+               smoking = str(row['smoking_status']) if pd.notna(row['smoking_status']) else "Unknown"
+               if smoking not in ["never smoked", "formerly smoked", "smokes", "Unknown"]:
+                   smoking = "Unknown"
 
+               # Create patient data with all checked values
+               patient_data = {
+                   'gender': gender,
+                   'age': age,
+                   'hypertension': hypertension,
+                   'ever_married': ever_married,
+                   'work_type': work_type,
+                   'residence_type': residence_type,
+                   'avg_glucose_level': glucose,
+                   'bmi': bmi,
+                   'smoking_status': smoking
+               }
+               
+               # Calculate risk factors
+               risk_factors = 0
+               if patient_data['hypertension'] == 1:
+                   risk_factors += 0.3
+               if patient_data['age'] > 60:
+                   risk_factors += 0.3
+               if patient_data['avg_glucose_level'] > 200:
+                   risk_factors += 0.2
+               if patient_data['smoking_status'] == 'smokes':
+                   risk_factors += 0.2
+                   
+               patient_data['stroke_risk'] = min(risk_factors, 1.0)
+               
+               # Check if patient already exists
+               existing_patient = patients.find_one({
+                   'gender': patient_data['gender'],
+                   'age': patient_data['age'],
+                   'hypertension': patient_data['hypertension'],
+                   'avg_glucose_level': patient_data['avg_glucose_level']
+               })
+               
+               # Add only new patients
+               if not existing_patient:
+                   patients.insert_one(patient_data)
+                   added_count += 1
+                   
+           except Exception as e:
+               print(f"Error processing record: {str(e)}")
+               continue
+           
+       return True, f"Successfully imported {added_count} new patient records"
+       
+   except FileNotFoundError:
+       return False, "No file"
+   except pd.errors.EmptyDataError:
+       return False, "Empty data"
+   except Exception as e:
+       return False, f"Error data: {str(e)}"
+
+# This is the button that uses my import function. If something goes wrong, I show an error message
 @app.route('/import_dataset', methods=['GET'])
 @login_required
 def import_dataset_route():
@@ -177,6 +292,14 @@ def import_dataset_route():
     else:
         flash(message, 'error')
     return redirect(url_for('patients_list'))
+
+# # This is where I add new patients and check their stroke risk
+# I got these risk values from the American Stroke Association and CDC resources:
+# High blood pressure adds 0.3 to risk
+# Being over 60 adds 0.3
+# High glucose adds 0.2
+# Smoking adds 0.2
+# The most someone can get is 1.0 (100% risk)
 
 @app.route('/add_patient', methods=['GET', 'POST'])
 @login_required
@@ -193,8 +316,6 @@ def add_patient_route():
             'bmi': float(request.form['bmi']),
             'smoking_status': request.form['smoking_status']
         }
-        
-        # stroke count
         risk_factors = 0.0
         if patient_data['hypertension'] == 1:
             risk_factors += 0.3
@@ -220,6 +341,8 @@ def add_patient_route():
     
     return redirect(url_for('patients_list'))
 
+# When someone clicks on a patient info button, this shows all their details
+
 @app.route('/patient_info/<string:patient_id>')
 @login_required
 def patient_info(patient_id):
@@ -228,12 +351,13 @@ def patient_info(patient_id):
         return render_template('patient_info.html', patient=patient)
     flash('Patient not found!')
     return redirect(url_for('patients_list'))
-
+# This is how users log out. I use session.clear() to remove all their data
 @app.route('/logout')
 def logout():
     session.clear()
     flash('Logged out successfully!')
     return redirect(url_for('home_page'))
 
+# This runs my app; (debug=True) - shows me errors when something goes wrong
 if __name__ == '__main__':
     app.run(debug=True)
