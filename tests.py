@@ -1,5 +1,6 @@
 import unittest
 from main_app import app
+from main_app import user_exists
 
 class StrokeAppTests(unittest.TestCase):
     def setUp(self):
@@ -39,7 +40,7 @@ class StrokeAppTests(unittest.TestCase):
        })
        self.assertTrue(user_exists(self.username, self.email))
 
-   def test_user_not_exists(self):
+    def test_user_not_exists(self):
        self.assertFalse(user_exists('NonExistenUser', 'nonexistent@example.com'))
 
 if __name__ == '__main__':
