@@ -1,9 +1,15 @@
-from datetime import datetime
-from werkzeug.security import generate_password_hash, check_password_hash
-from db_setup import get_db_connection, get_mongodb_connection
+# I made this file to keep all my database operations in one place. Here I add users and patients to databases and get their information.
+# I put database setup in db_setup.py separately. Here I keep all functions needed when someone uses the app - like when they register, log in, or check patient info.
+# I made sure my database operations are safe: by turn passwords into secret code, check for errors and always close databases properly.
+
+   
+from werkzeug.security import generate_password_hash, check_password_hash # For keeping passwords safe, I use "werkzeug.security" - it turns passwords into secret code. 
+from db_setup import get_db_connection, get_mongodb_connection # From db_setup I get functions that help me connect to my databases.
 
 # User Operations (SQLite)
 def add_user(name, email, password):
+
+# Password gets converted to secret code before saving - this keeps user data safe
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
@@ -17,9 +23,12 @@ def add_user(name, email, password):
     except Exception as e:
         return False, str(e)
     finally:
-        conn.close()
+        conn.close() # Database connection closes even if something goes wrong  
 
 def verify_user(email, password):
+
+# Function checks if login details match, It's safe because it compares secret coded passwords
+
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
@@ -36,6 +45,8 @@ def verify_user(email, password):
 
 # Patient Operations (MongoDB)
 def add_patient(patient_data):
+
+# Function adds new patient to database, Data gets checked in data_check.py before coming here
     db = get_mongodb_connection()
     try:
         result = db.patients.insert_one(patient_data)
@@ -44,6 +55,8 @@ def add_patient(patient_data):
         return False, str(e)
 
 def get_patient(patient_id):
+
+# Function gets single patient data, Used for showing patient details page
     db = get_mongodb_connection()
     try:
         patient = db.patients.find_one({'_id': patient_id})
@@ -52,28 +65,11 @@ def get_patient(patient_id):
         return None
 
 def get_all_patients():
+
+# Function gets list of all patients, Returns empty list if something breaks - safer than returning None
     db = get_mongodb_connection()
     try:
         patients = list(db.patients.find())
         return patients
     except Exception as e:
         return []
-
-def update_patient(patient_id, updated_data):
-    db = get_mongodb_connection()
-    try:
-        result = db.patients.update_one(
-            {'_id': patient_id},
-            {'$set': updated_data}
-        )
-        return bool(result.modified_count)
-    except Exception as e:
-        return False
-
-def delete_patient(patient_id):
-    db = get_mongodb_connection()
-    try:
-        result = db.patients.delete_one({'_id': patient_id})
-        return bool(result.deleted_count)
-    except Exception as e:
-        return False
