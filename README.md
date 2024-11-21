@@ -122,7 +122,6 @@ Go to Patient Base and click Update Dataset
 * 
 stroke_app/
 │
-├── config.py
 ├── main_app.py
 ├── db_setup.py
 ├── risk_calc.py
