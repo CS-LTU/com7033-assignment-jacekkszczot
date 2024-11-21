@@ -1,7 +1,8 @@
 # This app assesses stroke risk using user-friendly functions.
 # I used Flask because it's one of the best ways to create apps.
+# I use db_setup.py to set up my databases, database setup should be separate from the main app, each file should have one job.
 
-# I needed two different databases for my project:
+# I needed two different databases for my project (I set them up in db_setup.py):
 # I used SQLite for users because it was perfect for simple things like storing usernames and passwords. 
 # Also I picked MongoDB for patients because I have many different details about each patient and I might need to add more later. In MongoDB 
 # I can easily change what information I store, and it's really good when you have lots of data. SQLite would be too strict for this but MongoDB is more practical.
@@ -24,7 +25,7 @@
 # Only we must remember about changing a .csv file name in data folder to dataset.csv, I do this for the future to easily update file data.
 
 # Here's what I used to make my app safe:
-# Password Security: Users create passwords when they register, function turn passwords into secret code using password_hash
+# Password Security: Users create passwords when they register, function turn passwords into secret code using password_hash (I set them up in db_setup.py).
 
 # Login Security: user needs an email and password to login and will be checked if already used - one email = one account only
 # When a user logs in, the function creates a session with a secret key that changes every time the app starts, and deletes the session when the user logs out.
@@ -45,36 +46,19 @@ from bson.objectid import ObjectId
 import os
 from functools import wraps
 import pandas as pd
+from db_setup import get_db_connection, get_mongodb_connection, init_databases
+
+# start databased
+init_databases()
+
+# connection with mongoDB
+mongo_db = get_mongodb_connection()
+patients = mongo_db.patients
+
 
 # # I need this to keep user sessions secure
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-
-# I connect to SQLite database this way - it's where I keep user accounts
-def get_db_connection():
-   conn = sqlite3.connect('user_base.db')
-   conn.row_factory = sqlite3.Row
-   return conn
-
-# I use MongoDB for my patient data - it's great for storing lots of data
-mongo_client = MongoClient('mongodb://localhost:27017/')
-mongo_db = mongo_client['stroke_management']
-patients = mongo_db.patients
-
-# I need this table for storing user information
-# It has columns for: id, name, email and hashed password
-def init_sqlite_db():
-   conn = get_db_connection()
-   c = conn.cursor()
-   c.execute('''CREATE TABLE IF NOT EXISTS users
-                (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                 name TEXT NOT NULL,
-                 email TEXT UNIQUE NOT NULL,
-                 password TEXT NOT NULL)''')
-   conn.commit()
-   conn.close()
-
-init_sqlite_db()
 
 # This is my security check - it makes sure nobody can register twice
 # I check both username and email 
