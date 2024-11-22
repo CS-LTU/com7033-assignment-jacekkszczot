@@ -1,37 +1,30 @@
-# This is my CSS file for stroke risk app. I wanted to make it look like a real medical app while keeping it simple and clear.
-# I'll probably add more styles later as I build new features.
-
-
-# For the page background I found a nice hospital image and made it stay fixed when scrolling - looks way better than a plain color.
-body { 
-    font-family: Arial; 
+/*This is my CSS file for stroke risk app. I wanted to make it look like a real medical app while keeping it simple and clear.
+I'll probably add more styles later as I build new features.
+For the page background I found a nice hospital image and made it stay fixed when scrolling - looks way better than a plain color.*/
+body {
+    font-family: Arial;
     margin: 0;
     padding: 0;
     background-image: url('/static/images/background.jpg');
     background-size: cover;
     background-attachment: fixed;
-}
-
-
-# I made a simple blue navigation bar at the top. Blue looks medical and professional, and I can always add more buttons here later.
-.nav { 
+    }
+    /*I made a simple blue navigation bar at the top. Blue looks medical and professional, and I can always add more buttons here later.*/
+    .nav {
     background-color: #234567;
     padding: 15px;
     text-align: center;
-}
-
-# The main content needs to stand out from the background but not completely block it, so I made it white with a bit of transparency.
-.content {
+    }
+    /*The main content needs to stand out from the background but not completely block it, so I made it white with a bit of transparency.*/
+    .content {
     margin: 20px;
     padding: 20px;
     background-color: #FFFFFF;
     border-radius: 10px;
     opacity: 0.9;
-}
-
-# Every website needs good looking buttons. These match the nav bar color and get darker when you hover over them.
-/* Buttons */
-.btn {
+    }
+    /*Every website needs good looking buttons. These match the nav bar color and get darker when you hover over them.*/
+    .btn {
     display: inline-block;
     padding: 10px 20px;
     background-color: #456789;
@@ -40,55 +33,47 @@ body {
     border-radius: 5px;
     cursor: pointer;
     text-decoration: none;
-}
-
-.btn:hover {
+    }
+    .btn:hover {
     background-color: #567890;
-}
-
-# The forms need to be super clear because we're handling medical data. I made everything line up nicely and added some breathing room.
-.form-group { 
-    margin: 15px 0; 
-}
-
-.form-input {
+    }
+    /*The forms need to be super clear because we're handling medical data. I made everything line up nicely and added some breathing room.*/
+    .form-group {
+    margin: 15px 0;
+    }
+    .form-input {
     padding: 8px;
     width: 100%;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
-}
-
-.form-group input,
-.form-group select {
+    }
+    .form-group input,
+    .form-group select {
     width: 100%;
     padding: 8px;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
     background-color: #FFFFFF;
-}
-
-# Sometimes I need to put form elements side by side - flexbox makes this super easy.
-.form-row {
+    }
+    /*Sometimes I need to put form elements side by side - flexbox makes this super easy.*/
+    .form-row {
     display: flex;
     gap: 10px;
     margin-bottom: 10px;
-}
-
-# Users need to know if something went wrong or worked ok. Red for errors, green for success - kept the colors soft so they're not annoying.
-.alert { 
-    padding: 10px; 
-    margin: 10px 0; 
-    background-color: #F8D7DA; 
+    }
+    /*Users need to know if something went wrong or worked ok. Red for errors, green for success - kept the colors soft so they're not annoying.*/
+    .alert {
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #F8D7DA;
     border-radius: 5px;
-}
-
-.alert-success {
+    }
+    .alert-success {
     background-color: #D4EDDA;
     color: #155724;
-}
-
-.alert-error {
+    }
+    .alert-error {
     background-color: #F8D7DA;
     color: #721C24;
-}
-
+    }
+    
