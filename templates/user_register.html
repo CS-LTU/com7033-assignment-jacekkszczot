@@ -1,16 +1,23 @@
-{% extends "main_layout.html" %}
-{% block content %}
-<center><h2>New User Registration</h2>
-<form method="POST">
-    <div class="form-group">
-        <input type="text" name="name" placeholder="Enter Full Name" required>
-    </div>
-    <div class="form-group">
-        <input type="email" name="email" placeholder="Enter Email" required>
-    </div>
-    <div class="form-group">
-        <input type="password" name="password" placeholder="Enter Password" required>
-    </div>
-    <button type="submit" class="btn">Create Account</button></center>
-</form>
-{% endblock %}
+<!-- Registration page for new users. Similar to login but with an extra field for full name.
+    Using the same layout and style as login page to keep things consistent. -->
+
+    {% extends "main_layout.html" %}
+    {% block content %}
+    <center>
+       <h2>New User Registration</h2>
+       <!-- Registration form with name, email and password fields.
+            Made all fields required to ensure we get complete user data -->
+       <form method="POST">
+           <div class="form-group">
+               <input type="text" name="name" placeholder="Enter Full Name" required>
+           </div>
+           <div class="form-group">
+               <input type="email" name="email" placeholder="Enter Email" required>
+           </div>
+           <div class="form-group">
+               <input type="password" name="password" placeholder="Enter Password" required>
+           </div>
+           <button type="submit" class="btn">Create Account</button>
+       </form>
+    </center>
+    {% endblock %}
