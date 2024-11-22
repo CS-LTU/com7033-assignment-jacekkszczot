@@ -124,7 +124,6 @@ stroke_app/
 │
 ├── main_app.py
 ├── db_setup.py
-├── risk_calc.py
 ├── tests.py
 ├── db_operations
 │
