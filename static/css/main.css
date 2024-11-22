@@ -1,6 +1,8 @@
-/* main.css */
+# This is my CSS file for stroke risk app. I wanted to make it look like a real medical app while keeping it simple and clear.
+# I'll probably add more styles later as I build new features.
 
-/* All pages */
+
+# For the page background I found a nice hospital image and made it stay fixed when scrolling - looks way better than a plain color.
 body { 
     font-family: Arial; 
     margin: 0;
@@ -10,14 +12,15 @@ body {
     background-attachment: fixed;
 }
 
-/* Navigation */
+
+# I made a simple blue navigation bar at the top. Blue looks medical and professional, and I can always add more buttons here later.
 .nav { 
     background-color: #234567;
     padding: 15px;
     text-align: center;
 }
 
-/* Content areas */
+# The main content needs to stand out from the background but not completely block it, so I made it white with a bit of transparency.
 .content {
     margin: 20px;
     padding: 20px;
@@ -26,6 +29,7 @@ body {
     opacity: 0.9;
 }
 
+# Every website needs good looking buttons. These match the nav bar color and get darker when you hover over them.
 /* Buttons */
 .btn {
     display: inline-block;
@@ -42,7 +46,7 @@ body {
     background-color: #567890;
 }
 
-/* Forms */
+# The forms need to be super clear because we're handling medical data. I made everything line up nicely and added some breathing room.
 .form-group { 
     margin: 15px 0; 
 }
@@ -63,13 +67,14 @@ body {
     background-color: #FFFFFF;
 }
 
+# Sometimes I need to put form elements side by side - flexbox makes this super easy.
 .form-row {
     display: flex;
     gap: 10px;
     margin-bottom: 10px;
 }
 
-/* Alerts */
+# Users need to know if something went wrong or worked ok. Red for errors, green for success - kept the colors soft so they're not annoying.
 .alert { 
     padding: 10px; 
     margin: 10px 0; 
