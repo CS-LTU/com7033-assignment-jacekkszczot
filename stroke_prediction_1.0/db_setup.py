@@ -7,7 +7,7 @@ import os
 
 def setup_sqlite():
 # Set up SQLite database for user accounts
-    conn = sqlite3.connect('user_base.db')
+    conn = sqlite3.connect('../database/user_base.db')
     cursor = conn.cursor()
     
     # Create users table with all needed fields
@@ -109,7 +109,7 @@ def init_databases():
 
 def get_db_connection():
     # Connect to SQLite - used for user accounts
-    conn = sqlite3.connect('user_base.db')
+    conn = sqlite3.connect('../database/user_base.db')
     conn.row_factory = sqlite3.Row
     return conn
 

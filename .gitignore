@@ -1,7 +1,9 @@
 .DS_Store
 venv/
 myenv/
-_pycache_
+*.pyc
 *.db
 *.md
 *.csv
+.env
+database/user_base.db

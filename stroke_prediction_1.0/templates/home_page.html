@@ -5,7 +5,7 @@ and one for guests, because I only want to show the medical content to registere
 {% block content %}
 {% if 'user_id' in session %}
 <div class="home-content">
-   <h1>Stroke Management App</h1>
+  <center><h1>Stroke Management App</h1></center> 
 
    <!-- Main welcome message explaining what the app does and how to use it. -->
    <h3><center>Welcome to the Stroke Prediction 1.0 App <br><br>
@@ -21,43 +21,13 @@ and one for guests, because I only want to show the medical content to registere
    Good luck with your work!</center></h3>
    
    <!-- Added medical themed image for logged-in users -->
-   <img src="/static/images/hearth.png" alt="Invitation" />
+  <center> <img src="/static/images/hearth.png" alt="Invitation" /></center>
 </div>
 {% else %}
 <div class="home-content">
    <!-- Simple welcome image for not logged users -->
-   <center>
-       <img src="/static/images/welcome.png" alt="Invitation" />
-   </center>
+   
+       <center><img src="/static/images/welcome.png" alt="Invitation" /></center>
 </div>
 {% endif %}
-
-<!-- Put styles here because they're specific to this page. -->
-<style>
-.home-content {
-   text-align: center;
-   padding: 20px;
-}
-.welcome-box, .login-box {
-   margin: 20px auto;
-   padding: 20px;
-   max-width: 500px;
-   background-color: rgba(255, 255, 255, 0.9);
-   border-radius: 10px;
-}
-.button-group {
-   margin: 20px 0;
-}
-.button-group .btn {
-   margin: 0 10px;
-}
-h1 {
-   color: #234567;
-   margin-bottom: 30px;
-}
-h2 {
-   color: #456789;
-   margin-bottom: 20px;
-}
-</style>
 {% endblock %}

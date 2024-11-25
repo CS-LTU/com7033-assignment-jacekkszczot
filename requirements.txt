@@ -1,5 +1,0 @@
-Flask
-Werkzeug
-pymongo
-pandas
-python-dotenv

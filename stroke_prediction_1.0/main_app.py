@@ -342,6 +342,97 @@ def logout():
     flash('Logged out successfully!')
     return redirect(url_for('home_page'))
 
+@app.route('/edit_patient/<string:patient_id>', methods=['GET', 'POST'])
+@login_required
+def edit_patient(patient_id):
+    patient = patients.find_one({'_id': ObjectId(patient_id)})
+    if not patient:
+        flash('Patient not found!')
+        return redirect(url_for('patients_list'))
+        
+    if request.method == 'POST':
+        try:
+            # Download and change data from dataset
+            updated_data = {
+                'gender': request.form['gender'],
+                'age': float(request.form['age']),
+                'hypertension': int(request.form['hypertension']),
+                'ever_married': request.form['ever_married'],
+                'work_type': request.form['work_type'],
+                'residence_type': request.form['residence_type'],
+                'avg_glucose_level': float(request.form['avg_glucose_level']),
+                'bmi': float(request.form['bmi']),
+                'smoking_status': request.form['smoking_status']
+            }
+            
+            # Risk Factor Calculator
+            risk_factors = 0.0
+            if updated_data['hypertension'] == 1:
+                risk_factors += 0.3
+            if updated_data['age'] > 60:
+                risk_factors += 0.3
+            if updated_data['avg_glucose_level'] > 200:
+                risk_factors += 0.2
+            if updated_data['smoking_status'].lower() == 'smokes':
+                risk_factors += 0.2
+                
+            updated_data['stroke_risk'] = min(risk_factors, 1.0)
+            
+            # Update Patient infi in database
+            result = patients.update_one(
+                {'_id': ObjectId(patient_id)},
+                {'$set': updated_data}
+            )
+            
+            if result.modified_count > 0:
+                flash('Patient updated successfully!')
+            else:
+                flash('No changes were made.')
+                
+            return redirect(url_for('patients_list'))
+            
+        except ValueError as e:
+            flash('Invalid data format. Please check your inputs.')
+        except Exception as e:
+            flash(f'Error updating patient: {str(e)}')
+            
+    return render_template('edit_patient.html', patient=patient)
+
+@app.route('/delete_patient/<string:patient_id>')
+@login_required
+def delete_patient(patient_id):
+    patients.delete_one({'_id': ObjectId(patient_id)})
+    flash('Patient deleted successfully!')
+    return redirect(url_for('patients_list'))
+
+@app.route('/edit_user', methods=['GET', 'POST'])
+@login_required
+def edit_user():
+    conn = get_db_connection()
+    if request.method == 'POST':
+        # User data update
+        name = request.form['name']
+        email = request.form['email']
+        conn.execute('UPDATE users SET name = ?, email = ? WHERE id = ?',
+                     (name, email, session['user_id']))
+        conn.commit()
+        flash('User information updated successfully!')
+        return redirect(url_for('home_page'))
+    user = conn.execute('SELECT * FROM users WHERE id = ?', (session['user_id'],)).fetchone()
+    conn.close()
+    return render_template('edit_user.html', user=user)
+
+@app.route('/delete_user')
+@login_required
+def delete_user():
+    conn = get_db_connection()
+    conn.execute('DELETE FROM users WHERE id = ?', (session['user_id'],))
+    conn.commit()
+    conn.close()
+    session.clear()
+    flash('Your account has been deleted.')
+    return redirect(url_for('home_page'))
+
 # This runs my app; (debug=True) - shows me errors when something goes wrong
 if __name__ == '__main__':
     app.run(debug=True)
