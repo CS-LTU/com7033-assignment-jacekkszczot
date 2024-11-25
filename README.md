@@ -35,22 +35,24 @@ To install the required libraries, run:
    python -m venv venv
    venv\Scripts\activate
    pip install -r requirements.txt
-Prepare and import patient data:
+   
+## Prepare and import patient data:
 Register and login to Kaggle.
-Download the patient data from https://www.kaggle.com/datasets/fedesoriano/stroke-prediction-dataset?resource=download
-Unpack the file to the data/ folder and rename it to dataset.csv.
-Running the Application
-Start MongoDB.
-Run the application locally using:
-python main_app.py
-The app will be available at http://127.0.0.1:5000/.
-App Testing
-Test the Flask application by running:
+  Download the patient data from https://www.kaggle.com/datasets/fedesoriano/stroke-prediction-dataset?resource=download  
+  Unpack the file to the data/ folder and rename it to dataset.csv.
 
-python tests.py
-Tests include:
-Home, login, and registration pages status checks.
-User authentication and database operations verification.
+## Running the Application
+Start MongoDB.  
+Run the application locally using:  
+python main_app.py  
+The app will be available at http://127.0.0.1:5000/.  
+
+## App Testing
+Test the Flask application by running:  
+python tests.py  
+Tests include:  
+Home, login, and registration pages status checks.  
+User authentication and database operations verification. 
 
 ## Application Structure
 
