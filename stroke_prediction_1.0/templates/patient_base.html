@@ -25,13 +25,19 @@
                            <option value="Female">Female</option>
                            <option value="Other">Other</option>
                        </select>
+                <div class="form-group">
+                       <select name="heart_disease" id="heart_disease" class="form-control" required>
+                            <option value="">Heart Disease</option>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                       </select>
                    </div>
                    <div class="form-group">
                        <input type="number" name="age" placeholder="Patient Age" min="0" max="120" required>
                    </div>
                    <div class="form-group">
                        <select name="hypertension" required>
-                           <option value="">Hypertension select from list</option>
+                           <option value="">Hypertension</option>
                            <option value="0">No</option>
                            <option value="1">Yes</option>
                        </select>
@@ -97,8 +103,9 @@
                     <thead>
                         <tr>
                             <th>Unique ID</th>
-                            <th>Gender</th>
                             <th>Age</th>
+                            <th>Smoking Status</th>
+                            <th>Avg Glucose Level</th>
                             <th>Hypertension</th>
                             <th>Risk Status</th>
                             <th>Actions</th>
@@ -109,8 +116,9 @@
                             {% for patient in patients %}
                             <tr>
                                 <td>{{ patient._id }}</td>
-                                <td>{{ patient.gender }}</td>
+                                <td>{{ patient.avg_glucose_level }}</td>
                                 <td>{{ patient.age }}</td>
+                                <td>{{patient.smoking_status}}</td>
                                 <td>{{ "Yes" if patient.hypertension == 1 else "No" }}</td>
                                 <td>{{ "%.1f"|format(patient.stroke_risk * 100) if patient.stroke_risk else "N/A" }}%</td>
                                 <td>

@@ -47,6 +47,9 @@ I also included a button to allow the user to easily navigate back to the patien
             <div class="info-group">
                 <label>Smoking Status:</label> {{ patient.smoking_status }}
             </div>
+            <div class="info-group">
+                <label>Heart Disease: </label> {{ "Yes" if patient.heart_disease == 1 else "No" }}
+            </div>
         </div><br><br><br>
 
         <div class="button-group">

@@ -293,6 +293,7 @@ def add_patient_route():
             'gender': request.form['gender'],
             'age': float(request.form['age']),
             'hypertension': int(request.form['hypertension']),
+            'heart_disease': int(request.form['heart_disease']),  # dodane
             'ever_married': request.form['ever_married'],
             'work_type': request.form['work_type'],
             'residence_type': request.form['residence_type'],
