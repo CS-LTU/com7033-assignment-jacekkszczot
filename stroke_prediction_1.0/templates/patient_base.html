@@ -120,7 +120,7 @@
                                 <td>{{ patient.age }}</td>
                                 <td>{{patient.smoking_status}}</td>
                                 <td>{{ "Yes" if patient.hypertension == 1 else "No" }}</td>
-                                <td>{{ "%.1f"|format(patient.stroke_risk * 100) if patient.stroke_risk else "N/A" }}%</td>
+                                <td>{{ "%.1f"|format(patient.stroke_risk * 100) if patient.stroke_risk else "0" }}%</td>
                                 <td>
                                     <a href="{{ url_for('patient_info', patient_id=patient._id) }}" class="btn btn-view">View</a>
                                     <a href="{{ url_for('edit_patient', patient_id=patient._id) }}" class="btn btn-edit">Edit</a>
