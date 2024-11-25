@@ -6,4 +6,3 @@ myenv/
 *.md
 *.csv
 .env
-database/user_base.db
