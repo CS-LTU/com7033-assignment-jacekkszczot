@@ -10,22 +10,19 @@
        <!-- Registration form with name, email and password fields.
             Made all fields required to ensure we get complete user data -->
             <form method="POST" action="{{ url_for('user_register') }}">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required>
-                  </div>
-                <div class="form-group">
-                  <label for="email">Email</label>
-                  <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                  <label for="password">Password</label>
-                  <input type="password" id="password" name="password" required>
-                </div>
-                <div class="form-actions">
-                  <button type="submit" class="btn">Create Account</button>
-                </div>
-              </form>
-            </div>
-          </div>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn">Register</button>
+    </form>
+</div>
           {% endblock %}
