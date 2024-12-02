@@ -423,7 +423,7 @@ def edit_user():
     conn.close()
     return render_template('edit_user.html', user=user)
 
-@app.route('/delete_user')
+@app.route('/delete_user', methods=['POST'])
 @login_required
 def delete_user():
     conn = get_db_connection()
