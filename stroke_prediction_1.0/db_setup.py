@@ -76,7 +76,7 @@ def setup_mongodb():
                     'bmi': {
                         'bsonType': ['double', 'int'], # to accept both int and double ['double', 'init']
                         'minimum': 10,
-                        'maximum': 50
+                        'maximum': 70
                     },
                     'smoking_status': {
                         'bsonType': 'string',
